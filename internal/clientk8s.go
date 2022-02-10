@@ -1,11 +1,15 @@
-package k8s
+package internal
 
 import (
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
 )
 
-func NewClient() (*kubernetes.Clientset, error) {
+type Client struct {
+	Clientset kubernetes.Interface
+}
+
+func NewClient() (*Client, error) {
 	pathOptions := clientcmd.NewDefaultPathOptions()
 	pathOptions.LoadingRules.DoNotResolvePaths = false
 	config, err := pathOptions.GetStartingConfig()
@@ -25,5 +29,5 @@ func NewClient() (*kubernetes.Clientset, error) {
 		return nil, err
 	}
 
-	return clientset, nil
+	return &Client{clientset}, nil
 }
