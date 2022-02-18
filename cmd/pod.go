@@ -37,5 +37,10 @@ func pod(ctx context.Context, p internal.StructPodsOptions) error {
 		return err
 	}
 
+	err = client.GetEvent(ctx, p)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
